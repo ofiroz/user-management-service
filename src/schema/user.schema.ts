@@ -34,6 +34,7 @@ export class UpdateUserInput {
 
 export const userTypeDefs = gql`
     enum City {
+        MAALE_ADUMIM
         NEW_YORK
         LONDON
         PARIS
