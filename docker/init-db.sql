@@ -1,0 +1,23 @@
+-- Create extensions
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TYPE city_enum AS ENUM ('NEW_YORK', 'LONDON', 'PARIS', 'TOKYO', 'BERLIN');
+
+-- Create cities table
+CREATE TABLE IF NOT EXISTS cities (
+    id SERIAL PRIMARY KEY,
+    name city_enum NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create users table
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    birth_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    city city_enum NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+); 
