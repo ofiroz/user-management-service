@@ -13,10 +13,11 @@ describe('UserService', () => {
     beforeEach(() => {
         mockRepository = {
             find: jest.fn(),
-            findOneBy: jest.fn(),
+            findOne: jest.fn(),
             create: jest.fn(),
             save: jest.fn(),
-            delete: jest.fn(),
+            remove: jest.fn(),
+            merge: jest.fn(),
         } as any;
 
         userService = new UserService(mockRepository);
@@ -45,16 +46,24 @@ describe('UserService', () => {
 
     describe('findById', () => {
         it('should return user if found', async () => {
-            const mockUser = { id: 1, first_name: 'John', last_name: 'Doe' };
-            mockRepository.findOneBy.mockResolvedValue(mockUser as User);
+            const mockUser = {
+                id: 1,
+                first_name: 'John',
+                last_name: 'Doe',
+                birth_date: new Date(),
+                city: City.NEW_YORK,
+                created_at: new Date(),
+                updated_at: new Date(),
+            };
+            mockRepository.findOne.mockResolvedValue(mockUser as User);
 
             const result = await userService.findById(1);
             expect(result).toEqual(mockUser);
-            expect(mockRepository.findOneBy).toHaveBeenCalledWith({ id: 1 });
+            expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
         });
 
         it('should throw UserNotFoundError if user not found', async () => {
-            mockRepository.findOneBy.mockResolvedValue(null);
+            mockRepository.findOne.mockResolvedValue(null);
 
             await expect(userService.findById(1)).rejects.toThrow(UserNotFoundError);
         });

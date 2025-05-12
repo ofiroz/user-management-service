@@ -9,11 +9,14 @@ A GraphQL-based user management service built with TypeScript, Express, Apollo S
 - PostgreSQL database
 - TypeScript support
 - TypeORM for database operations
+- Docker support with multi-container setup
+- Nginx load balancer
+- API service with 2 replicas
 
 ## Prerequisites
 
 - Node.js (v14 or higher)
-- PostgreSQL (v12 or higher)
+- Docker and Docker Compose
 - npm or yarn
 
 ## Environment Variables
@@ -26,7 +29,7 @@ PORT=4000
 NODE_ENV=development
 
 # Database
-DB_HOST=localhost
+DB_HOST=postgres
 DB_PORT=5432
 DB_USERNAME=postgres
 DB_PASSWORD=postgres
@@ -37,7 +40,7 @@ DB_NAME=user_management
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/ofiroz/user-management-service
 cd user-management-service
 ```
 
@@ -46,17 +49,17 @@ cd user-management-service
 npm install
 ```
 
-3. Start PostgreSQL and create database:
+3. Start the services using Docker Compose:
 ```bash
-createdb user_management
+docker-compose up -d
 ```
 
-4. Start the development server:
-```bash
-npm run dev
-```
+This will start:
+- PostgreSQL database
+- API service (2 replicas)
+- Nginx load balancer
 
-The server will start at `http://localhost:4000/graphql`
+The GraphQL playground will be available at `http://localhost/graphql`
 
 ## API Documentation
 
@@ -179,6 +182,14 @@ enum City {
 - `npm run build` - Build the project
 - `npm start` - Start production server
 - `npm test` - Run tests
+
+### Docker Commands
+
+- `docker-compose up -d` - Start all services
+- `docker-compose down` - Stop all services
+- `docker-compose build` - Rebuild services
+- `docker-compose logs -f` - View logs
+- `docker-compose ps` - Check service status
 
 ### Project Structure
 
